@@ -1,0 +1,9 @@
+{
+  "name": "neural_network",
+  "scripts": {
+    "dev": "npm run compile && npm start",
+    "start": "./program",
+    "compile": "cmake . && make && rm Makefile"
+  },
+  "license": "MIT"
+}
