@@ -1,52 +1,51 @@
-#include "./column.cpp"
-#include "./utils/include.h"
+#include "./network.h"
 
-class NeuralNetwork
+void NeuralNetwork::copyToNew()
 {
-public:
-  int *columnsInitializer;
-  int columnsAmount;
-  NeuralColumn *columns;
+  for (int i = 0; i < columnsAmount; i++)
+    columns[i].copyToNew();
+}
 
-  void copyToNew()
+void NeuralNetwork::implementChanges()
+{
+  for (int i = 0; i < columnsAmount; i++)
+    columns[i].implementChanges();
+}
+
+double *NeuralNetwork::activate(double *values)
+{
+  double *sum = values;
+  for (int i = 0; i < columnsAmount; i++)
+    sum = columns[i].activate(sum);
+  return sum;
+}
+
+void NeuralNetwork::train(double *input, double *expectedOutput)
+{
+  copyToNew();
+  double *originalScore = activate(input);
+
+  for (int i = 0; i < columnsAmount; i++)
   {
-    for (int i = 0; i < columnsAmount; i++)
-      columns[i].copyToNew();
+    for (int j = 0; j < columns[i].neuronsAmount; j++)
+    {
+      Neuron &neuron = columns[i].neurons[j];
+        }
   }
+  implementChanges();
+}
 
-  void implementChanges()
-  {
-    for (int i = 0; i < columnsAmount; i++)
-      columns[i].implementChanges();
-  }
+NeuralNetwork::NeuralNetwork(int *_columns) : columnsInitializer(_columns)
+{
+  int _columnsAmount = 0;
+  while (_columns[_columnsAmount] != 0)
+    _columnsAmount++;
+  columnsAmount = _columnsAmount - 1;
 
-  double *activate(double *values)
-  {
-    double *sum = values;
-    for (int i = 0; i < columnsAmount; i++)
-      sum = columns[i].activate(sum);
-    return sum;
-  }
+  if (columnsAmount == 0)
+    throw "Columns amount can't be 0";
 
-  void train(double *input, double *expectedOutput)
-  {
-    double *sum = activate(input);
-    // implementChanges();
-  }
-
-  NeuralNetwork(int *_columns) : columnsInitializer(_columns)
-  {
-
-    int _columnsAmount = 0;
-    while (_columns[_columnsAmount] != 0)
-      _columnsAmount++;
-    columnsAmount = _columnsAmount - 1;
-
-    if (columnsAmount == 0)
-      throw "Columns amount can't be 0";
-
-    columns = new NeuralColumn[columnsAmount];
-    for (int i = 0; i < columnsAmount; i++)
-      columns[i] = NeuralColumn(_columns[i], _columns[i + 1]);
-  }
-};
+  columns = new NeuralColumn[columnsAmount];
+  for (int i = 0; i < columnsAmount; i++)
+    columns[i] = NeuralColumn(_columns[i], _columns[i + 1]);
+}
