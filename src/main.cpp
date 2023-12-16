@@ -1,7 +1,7 @@
 #include <iostream>
 #include <math.h>
 
-#include "./network/network.cpp"
+#include "./network/include.h"
 
 using namespace std;
 
