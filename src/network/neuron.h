@@ -5,16 +5,17 @@
 class Neuron
 {
 private:
-  double *newWeights;
-  double newBias;
   double getActivationDerivative(double *values);
 
 public:
   int inputs;
+
+  double *newWeights;
   double *weights;
+
+  double newBias;
   double bias;
 
-  void copyToNew();
   void implementChanges();
   double activate(double *values);
 

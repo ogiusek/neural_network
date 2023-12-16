@@ -8,25 +8,11 @@ double Neuron::getActivationDerivative(double *values)
   return sum;
 }
 
-void Neuron::copyToNew()
-{
-  newWeights = new double[inputs];
-  for (int i = 0; i < inputs; i++)
-    newWeights[i] = weights[i];
-  newBias = bias;
-}
-
 void Neuron::implementChanges()
 {
+  bias = newBias;
   for (int i = 0; i < inputs; i++)
-  {
-    auto _newWeight = newWeights[i];
-    newWeights[i] = weights[i];
-    weights[i] = _newWeight;
-  }
-  auto _newBias = newBias;
-  newBias = bias;
-  bias = _newBias;
+    weights[i] = newWeights[i];
 }
 
 double Neuron::activate(double *values)
@@ -40,6 +26,7 @@ Neuron::~Neuron(){};
 Neuron::Neuron(int _inputs)
     : inputs(_inputs),
       weights(new double[_inputs]),
+      newWeights(new double[_inputs]),
       bias(0.0)
 {
   for (int i = 0; i < inputs; i++)

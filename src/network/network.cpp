@@ -1,11 +1,5 @@
 #include "./network.h"
 
-void NeuralNetwork::copyToNew()
-{
-  for (int i = 0; i < columnsAmount; i++)
-    columns[i].copyToNew();
-}
-
 void NeuralNetwork::implementChanges()
 {
   for (int i = 0; i < columnsAmount; i++)
@@ -20,17 +14,29 @@ double *NeuralNetwork::activate(double *values)
   return sum;
 }
 
-void NeuralNetwork::train(double *input, double *expectedOutput)
+void NeuralNetwork::train(double *input, double *expectedOutput, double learningRate)
 {
-  copyToNew();
-  double *originalScore = activate(input);
+  double originalScore = countCost(activate(input), expectedOutput);
 
   for (int i = 0; i < columnsAmount; i++)
   {
     for (int j = 0; j < columns[i].neuronsAmount; j++)
     {
       Neuron &neuron = columns[i].neurons[j];
-        }
+      for (int w = 0; w < neuron.inputs; w++)
+      {
+        neuron.weights[w] += learningRate;
+        double newScore = countCost(activate(input), expectedOutput);
+        neuron.weights[w] -= learningRate;
+        double delta = (newScore - originalScore) / learningRate;
+        neuron.newWeights[w] = neuron.weights[w] - learningRate * delta;
+      }
+      neuron.bias += learningRate;
+      double newScore = countCost(activate(input), expectedOutput);
+      neuron.bias -= learningRate;
+      double delta = (newScore - originalScore) / learningRate;
+      neuron.newBias = neuron.bias - learningRate * delta;
+    }
   }
   implementChanges();
 }

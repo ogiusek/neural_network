@@ -1,11 +1,5 @@
 #include "./column.h"
 
-void NeuralColumn::copyToNew()
-{
-  for (int i = 0; i < neuronsAmount; i++)
-    neurons[i].copyToNew();
-}
-
 void NeuralColumn::implementChanges()
 {
   for (int i = 0; i < neuronsAmount; i++)

@@ -10,10 +10,9 @@ public:
   int columnsAmount;
   NeuralColumn *columns;
 
-  void copyToNew();
   void implementChanges();
   double *activate(double *values);
-  void train(double *input, double *expectedOutput);
+  void train(double *input, double *expectedOutput, double learningRate);
 
   NeuralNetwork(int *_columns);
 };
