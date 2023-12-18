@@ -6,6 +6,7 @@ class Neuron
 {
 private:
   double getActivationDerivative(double *values);
+  double activationFunction(double value);
 
 public:
   int inputs;
@@ -16,7 +17,9 @@ public:
   double newBias;
   double bias;
 
+  void copyToNew();
   void implementChanges();
+
   double activate(double *values);
 
   Neuron(int _inputs);

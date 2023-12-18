@@ -1,13 +1,11 @@
 #include "neuron.h"
 
-double Neuron::getActivationDerivative(double *values)
+void Neuron::copyToNew()
 {
-  double sum = bias;
+  newBias = bias;
   for (int i = 0; i < inputs; i++)
-    sum += values[i] * weights[i];
-  return sum;
+    newWeights[i] = weights[i];
 }
-
 void Neuron::implementChanges()
 {
   bias = newBias;
@@ -15,14 +13,17 @@ void Neuron::implementChanges()
     weights[i] = newWeights[i];
 }
 
-double Neuron::activate(double *values)
+double Neuron::getActivationDerivative(double *values)
 {
-  double sum = getActivationDerivative(values);
-  return 1.0 / (1.0 + std::exp(-sum));
+  double sum = bias;
+  for (int i = 0; i < inputs; i++)
+    sum += values[i] * weights[i];
+  return sum;
 }
+double Neuron::activationFunction(double value) { return 1.0 / (1.0 + std::exp(-value)); }
+double Neuron::activate(double *values) { return activationFunction(getActivationDerivative(values)); }
 
-Neuron::Neuron() : inputs(0){};
-Neuron::~Neuron(){};
+Neuron::Neuron(){};
 Neuron::Neuron(int _inputs)
     : inputs(_inputs),
       weights(new double[_inputs]),
@@ -32,3 +33,4 @@ Neuron::Neuron(int _inputs)
   for (int i = 0; i < inputs; i++)
     weights[i] = 0.0;
 };
+Neuron::~Neuron(){};

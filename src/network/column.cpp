@@ -1,5 +1,11 @@
 #include "./column.h"
 
+void NeuralColumn::copyToNew()
+{
+  for (int i = 0; i < neuronsAmount; i++)
+    neurons[i].copyToNew();
+}
+
 void NeuralColumn::implementChanges()
 {
   for (int i = 0; i < neuronsAmount; i++)
@@ -15,7 +21,6 @@ double *NeuralColumn::activate(double *values)
 }
 
 NeuralColumn::NeuralColumn() : neuronsAmount(0){};
-NeuralColumn::~NeuralColumn(){};
 NeuralColumn::NeuralColumn(int _inputsAmount, int _neuronsAmount)
     : neuronsAmount(_neuronsAmount),
       neurons(new Neuron[_neuronsAmount])
@@ -26,3 +31,5 @@ NeuralColumn::NeuralColumn(int _inputsAmount, int _neuronsAmount)
   for (int i = 0; i < neuronsAmount; i++)
     neurons[i] = Neuron(_inputsAmount);
 }
+
+NeuralColumn::~NeuralColumn(){};

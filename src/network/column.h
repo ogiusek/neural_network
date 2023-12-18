@@ -8,6 +8,7 @@ public:
   int neuronsAmount;
   Neuron *neurons;
 
+  void copyToNew();
   void implementChanges();
 
   double *activate(double *values);
