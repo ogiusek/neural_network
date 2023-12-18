@@ -81,8 +81,4 @@ NeuralNetwork::NeuralNetwork(int *_columns) : columnsInitializer(_columns)
     columns[i] = NeuralColumn(_columns[i], _columns[i + 1]);
 }
 
-NeuralNetwork::~NeuralNetwork()
-{
-  free(columnsInitializer);
-  free(columns);
-}
+NeuralNetwork::~NeuralNetwork() {}
