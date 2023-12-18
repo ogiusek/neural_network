@@ -32,4 +32,7 @@ NeuralColumn::NeuralColumn(int _inputsAmount, int _neuronsAmount)
     neurons[i] = Neuron(_inputsAmount);
 }
 
-NeuralColumn::~NeuralColumn(){};
+NeuralColumn::~NeuralColumn()
+{
+  free(neurons);
+};

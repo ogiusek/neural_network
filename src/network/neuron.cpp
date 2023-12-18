@@ -33,4 +33,8 @@ Neuron::Neuron(int _inputs)
   for (int i = 0; i < inputs; i++)
     weights[i] = 0.0;
 };
-Neuron::~Neuron(){};
+Neuron::~Neuron()
+{
+  free(weights);
+  free(newWeights);
+};

@@ -20,6 +20,7 @@ public:
   void train(double **inputs, double **expectedOutputs, double learningRate, int batchSize);
 
   NeuralNetwork(int *_columns);
+  ~NeuralNetwork();
 };
 
 #endif

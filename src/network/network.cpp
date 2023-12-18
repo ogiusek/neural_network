@@ -40,7 +40,7 @@ void NeuralNetwork::train(double **inputs, double **expectedOutputs, double lear
   {
     double *input = inputs[batch];
     double *expectedOutput = expectedOutputs[batch];
-    double originalScore = countCost(activate(input), expectedOutput);
+    double originalScore = countCost(activate(input), expectedOutput, columnsInitializer[columnsAmount - 1]);
 
     for (int i = 0; neurons[i] != nullptr; i++)
     {
@@ -49,14 +49,14 @@ void NeuralNetwork::train(double **inputs, double **expectedOutputs, double lear
       for (int w = 0; w < neuron.inputs; w++)
       {
         neuron.weights[w] += learningRate;
-        double newScore = countCost(activate(input), expectedOutput);
+        double newScore = countCost(activate(input), expectedOutput, columnsInitializer[columnsAmount - 1]);
         neuron.weights[w] -= learningRate;
         double delta = (newScore - originalScore) / learningRate;
         neuron.newWeights[w] -= learningRate * delta / batchSize;
       }
 
       // neuron.bias += learningRate;
-      // double newScore = countCost(activate(input), expectedOutput);
+      // double newScore = countCost(activate(input), expectedOutput, columnsInitializer[columnsAmount - 1]);
       // neuron.bias -= learningRate;
       // double delta = (newScore - originalScore) / learningRate;
       // neuron.newBias -= learningRate * delta / batchSize;
@@ -79,4 +79,10 @@ NeuralNetwork::NeuralNetwork(int *_columns) : columnsInitializer(_columns)
   columns = new NeuralColumn[columnsAmount];
   for (int i = 0; i < columnsAmount; i++)
     columns[i] = NeuralColumn(_columns[i], _columns[i + 1]);
+}
+
+NeuralNetwork::~NeuralNetwork()
+{
+  free(columnsInitializer);
+  free(columns);
 }
