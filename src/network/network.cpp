@@ -78,7 +78,7 @@ NeuralNetwork::NeuralNetwork(int *_columns) : columnsInitializer(_columns)
 
   columns = new NeuralColumn[columnsAmount];
   for (int i = 0; i < columnsAmount; i++)
-    columns[i] = NeuralColumn(_columns[i], _columns[i + 1]);
+    columns[i] = NeuralColumn(_columns[i], _columns[i + 1], 1);
 }
 
 NeuralNetwork::~NeuralNetwork()
