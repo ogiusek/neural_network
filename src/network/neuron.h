@@ -7,6 +7,7 @@ class Neuron
 private:
   double getActivationDerivative(double *values);
   double activationFunction(double value);
+  bool partOfColumn;
 
 public:
   int inputs;
@@ -22,8 +23,10 @@ public:
 
   double activate(double *values);
 
-  Neuron(int _inputs);
+  Neuron(int _inputs, bool _partOfColumn = 0);
   Neuron();
+
+  void free();
   ~Neuron();
 };
 

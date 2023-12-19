@@ -21,15 +21,28 @@ double *NeuralColumn::activate(double *values)
 }
 
 NeuralColumn::NeuralColumn() : neuronsAmount(0){};
-NeuralColumn::NeuralColumn(int _inputsAmount, int _neuronsAmount)
+NeuralColumn::NeuralColumn(int _inputsAmount, int _neuronsAmount, bool _partOfNetwork)
     : neuronsAmount(_neuronsAmount),
-      neurons(new Neuron[_neuronsAmount])
+      neurons(new Neuron[_neuronsAmount]),
+      partOfNetwork(_partOfNetwork)
 {
   if (neuronsAmount == 0)
     throw "Neurons amount can't be 0";
 
   for (int i = 0; i < neuronsAmount; i++)
-    neurons[i] = Neuron(_inputsAmount);
+    neurons[i] = Neuron(_inputsAmount, 1);
 }
 
-NeuralColumn::~NeuralColumn(){};
+void NeuralColumn::free()
+{
+  for (int i = 0; i < neuronsAmount; i++)
+    neurons[i].free();
+
+  delete[] neurons;
+}
+
+NeuralColumn::~NeuralColumn()
+{
+  if (!partOfNetwork)
+    free();
+};

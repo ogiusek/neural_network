@@ -4,6 +4,9 @@
 
 class NeuralColumn
 {
+private:
+  bool partOfNetwork;
+
 public:
   int neuronsAmount;
   Neuron *neurons;
@@ -13,8 +16,10 @@ public:
 
   double *activate(double *values);
 
-  NeuralColumn(int _inputsAmount, int _neuronsAmount);
+  NeuralColumn(int _inputsAmount, int _neuronsAmount, bool _partOfNetwork = 0);
   NeuralColumn();
+
+  void free();
   ~NeuralColumn();
 };
 
