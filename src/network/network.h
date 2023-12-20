@@ -3,6 +3,9 @@
 #include "./column.cpp"
 #include "./utils/include.h"
 
+// test diffrent cost functions
+// test diffrent activations functions
+
 class NeuralNetwork
 {
 public:
