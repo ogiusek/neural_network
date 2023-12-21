@@ -2,6 +2,8 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 
+#include <string>
+
 class Window
 {
 public:
@@ -11,6 +13,6 @@ public:
   SDL_Window *window = NULL;
   SDL_Renderer *renderer = NULL;
 
-  Window(int _width, int _height, char *title);
+  Window(int _width, int _height, std::string title);
   ~Window();
 };

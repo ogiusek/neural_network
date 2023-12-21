@@ -1,6 +1,6 @@
 #include "./window.h"
 
-Window::Window(int _width, int _height, char *title) : width(_width), height(_height)
+Window::Window(int _width, int _height, std::string title) : width(_width), height(_height)
 {
   TTF_Init();
 
@@ -9,7 +9,7 @@ Window::Window(int _width, int _height, char *title) : width(_width), height(_he
     throw "SDL could not initialize!";
 
   // Create a window
-  window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
+  window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
   if (window == NULL)
     throw "Window could not be created!";
 
