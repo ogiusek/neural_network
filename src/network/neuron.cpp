@@ -13,6 +13,19 @@ void Neuron::implementChanges()
     weights[i] = newWeights[i];
 }
 
+void Neuron::randomize()
+{
+  double limit = 25;
+  std::uniform_real_distribution<double> randomizer(-limit, limit);
+  for (int i = 0; i < inputs; i++)
+  { // generate weights
+    std::default_random_engine re(std::chrono::system_clock::now().time_since_epoch().count());
+    weights[i] = randomizer(re);
+  } // generate bias
+  std::default_random_engine re(std::chrono::system_clock::now().time_since_epoch().count());
+  bias = randomizer(re);
+};
+
 double Neuron::getActivationDerivative(double *values)
 {
   double sum = bias;

@@ -13,6 +13,7 @@ public:
 
   void copyToNew();
   void implementChanges();
+  void randomize();
 
   double *activate(double *values);
 

@@ -12,6 +12,12 @@ void NeuralNetwork::implementChanges()
     columns[i].implementChanges();
 }
 
+void NeuralNetwork::randomize()
+{
+  for (int i = 0; i < columnsAmount; i++)
+    columns[i].randomize();
+}
+
 double *NeuralNetwork::activate(double *values)
 {
   double *sum = values;

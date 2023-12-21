@@ -1,6 +1,8 @@
 #ifndef TYPE_NEURON_H
 #define TYPE_NEURON_H
 #include <math.h>
+#include <random>
+#include <chrono>
 
 class Neuron
 {
@@ -20,6 +22,7 @@ public:
 
   void copyToNew();
   void implementChanges();
+  void randomize();
 
   double activate(double *values);
 

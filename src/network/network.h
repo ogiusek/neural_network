@@ -15,6 +15,7 @@ public:
 
   void copyToNew();
   void implementChanges();
+  void randomize();
 
   Neuron **getAllNeurons();
 
