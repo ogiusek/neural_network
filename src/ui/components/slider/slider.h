@@ -15,9 +15,13 @@ private:
   int getKnobSize();
 
 public:
-  int w, h,
+  int w = 100, h = 20,
       x, y;
-  SDL_Color color;
+  double *assign;
+  TEXT comment;
+  SDL_Color knobTextColor = {0, 0, 0, 255};
+  SDL_Color knobColor = {128, 128, 128, 255};
+  SDL_Color bgColor = {255, 255, 255, 255};
 
   bool isHeld = false;
 
@@ -28,7 +32,7 @@ public:
 
   void Update(Inputs &inputs);
 
-  Slider(double _min, double _max, int _x, int _y, int _w, int _h, SDL_Color _color = {128, 128, 128, 255});
+  Slider(double _min, double _max, int _x, int _y, double *assign = nullptr);
 };
 
 #endif
