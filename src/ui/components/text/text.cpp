@@ -2,11 +2,13 @@
 
 void TEXT::Draw(SDL_Renderer *renderer)
 {
+  if (!defined)
+    return;
   TTF_Font *font = TTF_OpenFont("assets/fonts/font.ttf", fontSize);
   if (font == NULL)
     throw "Cannot open font";
 
-  SDL_Surface *surface = TTF_RenderText_Solid(font, text, color);
+  SDL_Surface *surface = TTF_RenderText_Solid(font, text.c_str(), color);
   SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
 
   int xOffset = 0;
@@ -29,5 +31,9 @@ void TEXT::Draw(SDL_Renderer *renderer)
   TTF_CloseFont(font);
 }
 
-TEXT::TEXT(int _x, int _y, const char *_text, int _fontSize)
-    : x(_x), y(_y), text(_text), fontSize(_fontSize) {}
+TEXT::TEXT(int _x, int _y, std::string _text, int _fontSize)
+    : x(_x), y(_y), text(_text), fontSize(_fontSize), defined(true)
+{
+}
+
+TEXT::TEXT() {}

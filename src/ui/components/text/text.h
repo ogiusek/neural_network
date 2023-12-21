@@ -4,6 +4,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
+#include <string>
+
 enum class Align
 {
   START,
@@ -13,16 +15,20 @@ enum class Align
 
 class TEXT
 {
+private:
+  bool defined = false;
+
 public:
   int x, y;
   int fontSize = 32;
-  const char *text;
+  std::string text;
   SDL_Color color = {0, 0, 0};
   Align xAlign = Align::START;
   Align yAlign = Align::START;
 
   void Draw(SDL_Renderer *renderer);
-  TEXT(int _x, int _y, const char *_text, int _fontSize = 32);
+  TEXT(int _x, int _y, std::string _text, int _fontSize = 32);
+  TEXT();
 };
 
 #endif
