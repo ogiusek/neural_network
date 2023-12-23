@@ -15,7 +15,7 @@ public:
 
   void copyToNew();
   void implementChanges();
-  void randomize();
+  void randomize(double weightLimit = 1.0, double biasLimit = 1.0);
 
   Neuron **getAllNeurons();
 

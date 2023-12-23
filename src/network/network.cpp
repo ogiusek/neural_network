@@ -12,10 +12,10 @@ void NeuralNetwork::implementChanges()
     columns[i].implementChanges();
 }
 
-void NeuralNetwork::randomize()
+void NeuralNetwork::randomize(double weightLimit, double biasLimit)
 {
   for (int i = 0; i < columnsAmount; i++)
-    columns[i].randomize();
+    columns[i].randomize(weightLimit, biasLimit);
 }
 
 double *NeuralNetwork::activate(double *values)
@@ -23,7 +23,6 @@ double *NeuralNetwork::activate(double *values)
   double *sum = values;
   for (int i = 0; i < columnsAmount; i++)
     sum = columns[i].activate(sum);
-  delete[] values;
   return sum;
 }
 

@@ -12,10 +12,10 @@ void NeuralColumn::implementChanges()
     neurons[i].implementChanges();
 }
 
-void NeuralColumn::randomize()
+void NeuralColumn::randomize(double weightLimit, double biasLimit)
 {
   for (int i = 0; i < neuronsAmount; i++)
-    neurons[i].randomize();
+    neurons[i].randomize(weightLimit, biasLimit);
 }
 
 double *NeuralColumn::activate(double *values)
@@ -23,6 +23,7 @@ double *NeuralColumn::activate(double *values)
   double *sum = new double[neuronsAmount];
   for (int i = 0; i < neuronsAmount; i++)
     sum[i] = neurons[i].activate(values);
+  delete[] values;
   return sum;
 }
 

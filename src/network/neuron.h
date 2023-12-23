@@ -22,7 +22,7 @@ public:
 
   void copyToNew();
   void implementChanges();
-  void randomize();
+  void randomize(double weightLimit, double biasLimit);
 
   double activate(double *values);
 

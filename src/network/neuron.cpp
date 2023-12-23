@@ -13,17 +13,17 @@ void Neuron::implementChanges()
     weights[i] = newWeights[i];
 }
 
-void Neuron::randomize()
+void Neuron::randomize(double weightLimit, double biasLimit)
 {
-  double limit = 25;
-  std::uniform_real_distribution<double> randomizer(-limit, limit);
+  std::uniform_real_distribution<double> weightRandomizer(-weightLimit, weightLimit);
   for (int i = 0; i < inputs; i++)
   { // generate weights
     std::default_random_engine re(std::chrono::system_clock::now().time_since_epoch().count());
-    weights[i] = randomizer(re);
+    weights[i] = weightRandomizer(re);
   } // generate bias
+  std::uniform_real_distribution<double> biasRandomizer(-weightLimit, weightLimit);
   std::default_random_engine re(std::chrono::system_clock::now().time_since_epoch().count());
-  bias = randomizer(re);
+  bias = biasRandomizer(re);
 };
 
 double Neuron::getActivationDerivative(double *values)
