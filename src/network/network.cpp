@@ -23,6 +23,7 @@ double *NeuralNetwork::activate(double *values)
   double *sum = values;
   for (int i = 0; i < columnsAmount; i++)
     sum = columns[i].activate(sum);
+  delete[] sum;
   return sum;
 }
 
