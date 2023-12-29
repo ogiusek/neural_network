@@ -5,6 +5,9 @@
 #include <algorithm>
 #include <string>
 
+#include "../text/text.h"         // import text class
+#include "../../../sdl/include.h" // import input class
+
 class Slider
 {
 private:
@@ -15,7 +18,7 @@ private:
   int getKnobSize();
 
 public:
-  int w = 100, h = 20,
+  int w = 300, h = 20,
       x, y;
   double *assign;
   TEXT comment;
