@@ -32,8 +32,7 @@ void TEXT::Draw(SDL_Renderer *renderer)
 }
 
 TEXT::TEXT(int _x, int _y, std::string _text, int _fontSize)
-    : x(_x), y(_y), text(_text), fontSize(_fontSize), defined(true)
-{
-}
+    : x(_x), y(_y), text(_text), fontSize(_fontSize) {}
 
-TEXT::TEXT() {}
+TEXT::TEXT(std::string _text) : text(_text){};
+TEXT::TEXT() : defined(false) {}

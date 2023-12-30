@@ -16,7 +16,7 @@ enum class Align
 class TEXT
 {
 private:
-  bool defined = false;
+  bool defined = true;
 
 public:
   int x, y;
@@ -28,6 +28,7 @@ public:
 
   void Draw(SDL_Renderer *renderer);
   TEXT(int _x, int _y, std::string _text, int _fontSize = 32);
+  TEXT(std::string _text);
   TEXT();
 };
 
