@@ -14,6 +14,10 @@ void Button::Draw(SDL_Renderer *renderer)
   SDL_SetRenderDrawColor(renderer, bgColor.r, bgColor.g, bgColor.b, bgColor.a);
   SDL_RenderFillRect(renderer, &rect);
 
+  text.x = x + w / 2;
+  text.y = y;
+  text.fontSize = h;
+  text.xAlign = Align::CENTER;
   text.Draw(renderer);
 }
 
