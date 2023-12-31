@@ -1,17 +1,5 @@
 #include "./network.h"
 
-void NeuralNetwork::copyToNew()
-{
-  for (int i = 0; i < columnsAmount; i++)
-    columns[i].copyToNew();
-}
-
-void NeuralNetwork::implementChanges()
-{
-  for (int i = 0; i < columnsAmount; i++)
-    columns[i].implementChanges();
-}
-
 void NeuralNetwork::randomize(double weightLimit, double biasLimit)
 {
   for (int i = 0; i < columnsAmount; i++)
@@ -20,56 +8,25 @@ void NeuralNetwork::randomize(double weightLimit, double biasLimit)
 
 double *NeuralNetwork::activate(double *values)
 {
-  double *sum = values;
+  double *sum = new double[columnsInitializer[0]];
+  memcpy(sum, values, columnsInitializer[0] * sizeof(double));
+
   for (int i = 0; i < columnsAmount; i++)
     sum = columns[i].activate(sum);
   return sum;
 }
 
-Neuron **NeuralNetwork::getAllNeurons()
-{
-  int neuronsAmount = 0;
-  for (int i = 0; i < columnsAmount; i++)
-    neuronsAmount += columns[i].neuronsAmount;
-  Neuron **result = new Neuron *[neuronsAmount];
-  for (int i = 0; i < columnsAmount; i++)
-    for (int j = 0; j < columns[i].neuronsAmount; j++)
-      result[i * columns[i].neuronsAmount + j] = &columns[i].neurons[j];
-  return result;
-}
-
 void NeuralNetwork::train(double **inputs, double **expectedOutputs, double learningRate, int batchSize)
 {
-  copyToNew();
-  Neuron **neurons = getAllNeurons();
   for (int batch = 0; batch < batchSize; batch++)
   {
-    double *input = inputs[batch];
-    double *expectedOutput = expectedOutputs[batch];
-    double originalScore = countCost(activate(input), expectedOutput, columnsInitializer[columnsAmount - 1]);
-
-    for (int i = 0; neurons[i] != nullptr; i++)
-    {
-      Neuron &neuron = *neurons[i];
-
-      for (int w = 0; w < neuron.inputs; w++)
+    for (int x = 0; x < columnsAmount; x++)
+      for (int y = 0; y < columns[x].neuronsAmount; y++)
       {
-        neuron.weights[w] += learningRate;
-        double newScore = countCost(activate(input), expectedOutput, columnsInitializer[columnsAmount - 1]);
-        neuron.weights[w] -= learningRate;
-        double delta = (newScore - originalScore) / learningRate;
-        neuron.newWeights[w] -= learningRate * delta / batchSize;
+        Neuron *neuron = &columns[x].neurons[y];
+        neuron->randomize(1.0, 1.0);
       }
-
-      // neuron.bias += learningRate;
-      // double newScore = countCost(activate(input), expectedOutput, columnsInitializer[columnsAmount - 1]);
-      // neuron.bias -= learningRate;
-      // double delta = (newScore - originalScore) / learningRate;
-      // neuron.newBias -= learningRate * delta / batchSize;
-    }
   }
-
-  implementChanges();
 }
 
 NeuralNetwork::NeuralNetwork(int *_columns) : columnsInitializer(_columns)

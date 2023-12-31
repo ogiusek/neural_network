@@ -14,14 +14,9 @@ private:
 public:
   int inputs;
 
-  double *newWeights;
   double *weights;
-
-  double newBias;
   double bias;
 
-  void copyToNew();
-  void implementChanges();
   void randomize(double weightLimit, double biasLimit);
 
   double activate(double *values);

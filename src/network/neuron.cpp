@@ -1,18 +1,5 @@
 #include "neuron.h"
 
-void Neuron::copyToNew()
-{
-  newBias = bias;
-  for (int i = 0; i < inputs; i++)
-    newWeights[i] = weights[i];
-}
-void Neuron::implementChanges()
-{
-  bias = newBias;
-  for (int i = 0; i < inputs; i++)
-    weights[i] = newWeights[i];
-}
-
 void Neuron::randomize(double weightLimit, double biasLimit)
 {
   std::uniform_real_distribution<double> weightRandomizer(-weightLimit, weightLimit);
@@ -40,7 +27,6 @@ Neuron::Neuron(){};
 Neuron::Neuron(int _inputs, bool _partOfColumn)
     : inputs(_inputs),
       weights(new double[_inputs]),
-      newWeights(new double[_inputs]),
       bias(0.0),
       partOfColumn(_partOfColumn)
 {
@@ -51,7 +37,6 @@ Neuron::Neuron(int _inputs, bool _partOfColumn)
 void Neuron::free()
 {
   delete[] weights;
-  delete[] newWeights;
 }
 
 Neuron::~Neuron()

@@ -11,10 +11,7 @@ public:
   int neuronsAmount;
   Neuron *neurons;
 
-  void copyToNew();
-  void implementChanges();
   void randomize(double weightLimit, double biasLimit);
-
   double *activate(double *values);
 
   NeuralColumn(int _inputsAmount, int _neuronsAmount, bool _partOfNetwork = 0);
