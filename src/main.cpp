@@ -73,8 +73,9 @@ int main()
   int weightLimit = 1,
       biasLimit = 1;
 
-  int *columns = new int[3]{2, 3, 2};                                          // network structure
-  NeuralNetwork *network = new NeuralNetwork(columns);                         // create network
+  int *columns = new int[3]{2, 3, 2};                  // network structure
+  NeuralNetwork *network = new NeuralNetwork(columns); // create network
+
   network->randomize(weightLimit, biasLimit);                                  // randomize network
   vector<Slider> sliders = getNetworkSliders(network, weightLimit, biasLimit); // get network sliders
 

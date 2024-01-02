@@ -21,8 +21,7 @@ float Neuron::getActivationDerivative(float *values)
   return sum;
 }
 float Neuron::activationFunction(float value) { return 1.0 / (1.0 + std::exp(-value)); }
-// float Neuron::activate(float *values) { return activationFunction(getActivationDerivative(values)); }
-float Neuron::activate(float *values) { return 0; }
+float Neuron::activate(float *values) { return activationFunction(getActivationDerivative(values)); }
 
 Neuron::Neuron() : weights(0), bias(0){};
 Neuron::Neuron(int _inputs)
