@@ -6,7 +6,7 @@ void TEXT::Draw(SDL_Renderer *renderer)
     return;
   TTF_Font *font = TTF_OpenFont("assets/fonts/font.ttf", fontSize);
   if (font == NULL)
-    throw "Cannot open font";
+    throw std::runtime_error("Cannot open font");
 
   SDL_Surface *surface = TTF_RenderText_Solid(font, text.c_str(), color);
   SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
