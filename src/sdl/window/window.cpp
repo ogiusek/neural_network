@@ -6,17 +6,17 @@ Window::Window(int _width, int _height, std::string title) : width(_width), heig
 
   // Initialize SDL
   if (SDL_Init(SDL_INIT_VIDEO) < 0)
-    throw "SDL could not initialize!";
+    throw std::runtime_error("SDL could not initialize!");
 
   // Create a window
   window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
   if (window == NULL)
-    throw "Window could not be created!";
+    throw std::runtime_error("Window could not be created!");
 
   // Create a renderer
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   if (renderer == NULL)
-    throw "Renderer could not be created!";
+    throw std::runtime_error("Renderer could not be created!");
 }
 
 Window::~Window()

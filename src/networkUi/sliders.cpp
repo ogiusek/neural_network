@@ -3,14 +3,14 @@
 
 #include "./include.h"
 
-std::vector<Slider> getNetworkSliders(NeuralNetwork *network, double sliderWeightLimit, double sliderBiasLimit)
+std::vector<Slider> getNetworkSliders(NeuralNetwork *network, float sliderWeightLimit, float sliderBiasLimit)
 {
   std::vector<Slider> sliders;
   int biases = 1, weights = 1;
-  for (int l = 0; l < network->columnsAmount; l++)
-    for (int n = 0; n < network->columns[l].neuronsAmount; n++)
+  for (int l = 0; l < network->columns.size; l++)
+    for (int n = 0; n < network->columns[l].neurons.size; n++)
     {
-      for (int w = 0; w < network->columns[l].neurons[n].inputs; w++)
+      for (int w = 0; w < network->columns[l].neurons[n].weights.size; w++)
       { // add weight slider
         Slider slider(-sliderWeightLimit, sliderWeightLimit, 32, 0);
         slider.bgColor = {224, 224, 224, 255};
