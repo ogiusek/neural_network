@@ -1,23 +1,23 @@
 #ifndef TYPE_NEURAL_COLUMN_H
 #define TYPE_NEURAL_COLUMN_H
-#include "neuron.cpp"
+
+#include <vector>
+#include <random>
+#include <chrono>
+
+// #include "../utils/include.h"
+#include "./neuron.cpp"
 
 class NeuralColumn
 {
 private:
-  bool partOfNetwork;
-
 public:
-  int neuronsAmount;
-  Neuron *neurons;
+  Array<Neuron> neurons;
+  void randomize(float weightLimit, float biasLimit); // randomize weights and biases
+  float *activate(float *values);                     // activate column
 
-  void randomize(double weightLimit, double biasLimit);
-  double *activate(double *values);
-
-  NeuralColumn(int _inputsAmount, int _neuronsAmount, bool _partOfNetwork = 0);
+  NeuralColumn(int _inputsAmount, int _neuronsAmount);
   NeuralColumn();
-
-  void free();
   ~NeuralColumn();
 };
 

@@ -3,28 +3,26 @@
 #include <math.h>
 #include <random>
 #include <chrono>
+#include <vector>
+
+#include "../utils/include.h"
 
 class Neuron
 {
 private:
-  double getActivationDerivative(double *values);
-  double activationFunction(double value);
-  bool partOfColumn;
+  float getActivationDerivative(float *values);
+  float activationFunction(float value);
 
 public:
-  int inputs;
+  Array<float> weights;
+  float bias;
 
-  double *weights;
-  double bias;
+  void randomize(float weightLimit, float biasLimit);
 
-  void randomize(double weightLimit, double biasLimit);
+  float activate(float *values);
 
-  double activate(double *values);
-
-  Neuron(int _inputs, bool _partOfColumn = 0);
+  Neuron(int _inputs);
   Neuron();
-
-  void free();
   ~Neuron();
 };
 
