@@ -1,16 +1,18 @@
 #include "neuron.h"
 
-void Neuron::randomize(float weightLimit, float biasLimit) // problem this is to fast and randomizing is the same for many neurons
+void Neuron::randomize(float weightLimit, float biasLimit)
 {
-  std::uniform_real_distribution<float> weightRandomizer(-weightLimit, weightLimit);
-  for (int i = 0; i < weights.size; i++)
-  { // generate weights
-    std::default_random_engine re(std::chrono::system_clock::now().time_since_epoch().count());
-    weights[i] = weightRandomizer(re);
-  } // generate bias
-  std::uniform_real_distribution<float> biasRandomizer(-weightLimit, weightLimit);
-  std::default_random_engine re(std::chrono::system_clock::now().time_since_epoch().count());
-  bias = biasRandomizer(re);
+  auto randomizer = [](float limit) -> float
+  {
+    std::random_device rd;
+    std::default_random_engine re(rd());
+    std::uniform_real_distribution<float> randomizer(-limit, limit);
+    float randomValue = randomizer(re);
+    return randomValue;
+  };
+  for (int i = 0; i < weights.size; i++)  // set weights
+    weights[i] = randomizer(weightLimit); // set bias
+  bias = randomizer(biasLimit);
 };
 
 float Neuron::getActivationDerivative(float *values)
