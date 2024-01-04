@@ -18,7 +18,6 @@ public:
   float bias;
 
   void randomize(float weightLimit, float biasLimit);
-
   float activate(float *values);
 
   Neuron(int _inputs);

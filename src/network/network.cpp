@@ -8,8 +8,9 @@ void NeuralNetwork::randomize(float weightLimit, float biasLimit)
 
 float *NeuralNetwork::activate(float *values)
 {
-  float *sum = new float[columnsInitializer[0]];
-  memcpy(sum, values, columnsInitializer[0] * sizeof(float));
+  int firstLayer = structure[0];
+  float *sum = new float[firstLayer];
+  memcpy(sum, values, firstLayer * sizeof(float));
   for (int i = 0; i < columns.size; i++)
     sum = columns[i].activate(sum);
   return sum;
@@ -26,13 +27,10 @@ void NeuralNetwork::train(float **inputs, float **expectedOutputs, float learnin
       }
 }
 
-NeuralNetwork::NeuralNetwork(int *_columns) : columnsInitializer(_columns)
+NeuralNetwork::NeuralNetwork(Array<int> _columns)
 {
-  int _columnsAmount = 0; // count columns
-  while (_columns[_columnsAmount] != 0)
-    _columnsAmount++;
-
-  columns = Array<NeuralColumn>(_columnsAmount - 1); // -1 for input layer
+  structure = _columns;
+  columns = Array<NeuralColumn>(_columns.size - 1); // -1 for input layer
 
   if (columns.size == 0)
     throw std::runtime_error("Columns amount can't be 0");
@@ -41,7 +39,4 @@ NeuralNetwork::NeuralNetwork(int *_columns) : columnsInitializer(_columns)
     columns[i] = NeuralColumn(_columns[i], _columns[i + 1]);
 }
 
-NeuralNetwork::~NeuralNetwork()
-{
-  delete[] columnsInitializer;
-}
+NeuralNetwork::~NeuralNetwork() {}

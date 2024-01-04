@@ -68,14 +68,13 @@ float **expectedOutputs = new float *[inputsAmount] // everything what is not ab
 
 int main()
 {
-  cout << "Hello World\n";
+  std::cout << "Hello World\n";
 
   int weightLimit = 1,
       biasLimit = 1;
 
-  int *columns = new int[3]{2, 3, 2};                  // network structure
-  NeuralNetwork *network = new NeuralNetwork(columns); // create network
-
+  Array<int> columns({2, 3, 2});                                               // network structure
+  NeuralNetwork *network = new NeuralNetwork(columns);                         // create network
   network->randomize(weightLimit, biasLimit);                                  // randomize network
   vector<Slider> sliders = getNetworkSliders(network, weightLimit, biasLimit); // get network sliders
 
@@ -129,12 +128,12 @@ int main()
     for (int x = 0; x < maxX; x++) // draw network outputs
       for (int y = 0; y < maxY; y++)
       {
-        Array<float> input(new float[2]{(float)x / maxX, (float)y / maxY}, 2);                                         // create input
-        Array<float> output = {network->activate(input.data), network->columnsInitializer[network->columns.size - 1]}; // activate network
-        int outputColor = output[0] > output[1] ? 1 : 0;                                                               // calculate output color
-        SDL_Color color = {Uint8(255 * outputColor), 0, Uint8(255 * (1 - outputColor)), 255};                          // set color
-        SDL_SetRenderDrawColor(window.renderer, color.r, color.g, color.b, color.a);                                   // set color
-        SDL_RenderDrawPoint(window.renderer, x + window.w / 2, y + window.h / 2);                                      // draw point
+        Array<float> input({(float)x / maxX, (float)y / maxY});                               // create input
+        Array<float> output = {network->activate(input.data), 2};                             // activate network
+        int outputColor = output[0] > output[1] ? 1 : 0;                                      // calculate output color
+        SDL_Color color = {Uint8(255 * outputColor), 0, Uint8(255 * (1 - outputColor)), 255}; // set color
+        SDL_SetRenderDrawColor(window.renderer, color.r, color.g, color.b, color.a);          // set color
+        SDL_RenderDrawPoint(window.renderer, x + window.w / 2, y + window.h / 2);             // draw point
       }
 
     for (int input = 0; input < inputsAmount; input++) // draw expected points

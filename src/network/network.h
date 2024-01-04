@@ -12,14 +12,14 @@
 class NeuralNetwork
 {
 public:
-  int *columnsInitializer;
+  Array<int> structure;
   Array<NeuralColumn> columns; // array of neural columns
 
   void randomize(float weightLimit = 1.0, float biasLimit = 1.0);                         // randomize weights and biases
   float *activate(float *values);                                                         // activate column
   void train(float **inputs, float **expectedOutputs, float learningRate, int batchSize); // train network
 
-  NeuralNetwork(int *_columns);
+  NeuralNetwork(Array<int> _columns);
   ~NeuralNetwork();
 };
 

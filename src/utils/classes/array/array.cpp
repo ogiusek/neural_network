@@ -30,8 +30,11 @@ Array<T>::Array(std::vector<T> arr) : Array(arr.size())
 };
 
 template <typename T>
-template <typename... Args>
-Array<T>::Array(Args... arr) : data(new T[sizeof...(arr)]{arr...}), size(sizeof...(arr)){};
+Array<T>::Array(std::initializer_list<T> arr) : data(new T[sizeof(arr.size())]), size(arr.size())
+{
+  for (int i = 0; i < size; i++)
+    data[i] = *arr.begin();
+};
 
 template <typename T> // array initializer
 Array<T>::Array(T *arr, int _size) : data(arr), size(_size){};
@@ -51,4 +54,8 @@ template <typename T> // empty initializer
 Array<T>::Array() : data(nullptr), size(0){};
 
 template <typename T>
-Array<T>::~Array() { delete[] data; };
+Array<T>::~Array()
+{
+  delete[] data;
+  data = nullptr;
+};

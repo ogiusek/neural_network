@@ -1,16 +1,6 @@
 #include <iostream>
 #include "./column.h"
 
-// double Neuron::getActivationDerivative(double *values)
-// {
-//   double sum = bias;
-//   for (int i = 0; i < inputs; i++)
-//     sum += values[i] * weights[i];
-//   return sum;
-// }
-// double Neuron::activationFunction(double value) { return 1.0 / (1.0 + std::exp(-value)); }
-// double Neuron::activate(double *values) { return activationFunction(getActivationDerivative(values)); }
-
 void NeuralColumn::randomize(float weightLimit, float biasLimit)
 {
   for (int i = 0; i < neurons.size; i++)

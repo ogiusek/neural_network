@@ -13,13 +13,12 @@ struct Array
   Array &operator=(const Array &other); // assignment
   T *&operator()();                     // returns array
 
-  template <typename... Args>
-  Array(Args... arr);
-  Array(T *arr);             // array parse
-  Array(T *arr, int _size);  // array parse
-  Array(std::vector<T> arr); // vector parse
-  Array(int _size);          // allocate memory
-  Array();                   // default
+  Array(T *arr);                       // array parse
+  Array(T *arr, int _size);            // array parse
+  Array(std::vector<T> arr);           // vector parse
+  Array(std::initializer_list<T> arr); // list initializer
+  Array(int _size);                    // allocate memory
+  Array();                             // default
 
   ~Array();
 };
