@@ -7,8 +7,9 @@
 template <typename T>
 struct Array
 {
-  T *data = nullptr;                    // array
-  int size;                             // array size
+  T *data = nullptr; // array
+  int size;          // array size
+
   T &operator[](int index);             // returns element in array
   Array &operator=(const Array &other); // assignment
   T *&operator()();                     // returns array
@@ -20,6 +21,7 @@ struct Array
   Array(int _size);                    // allocate memory
   Array();                             // default
 
+  void clear();
   ~Array();
 };
 

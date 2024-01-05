@@ -2,7 +2,10 @@
 
 // returns element in array
 template <typename T>
-T &Array<T>::operator[](int index) { return data[index]; };
+T &Array<T>::operator[](int index)
+{
+  return data[index];
+};
 
 // returns array
 template <typename T>
@@ -30,10 +33,13 @@ Array<T>::Array(std::vector<T> arr) : Array(arr.size())
 };
 
 template <typename T>
-Array<T>::Array(std::initializer_list<T> arr) : data(new T[sizeof(arr.size())]), size(arr.size())
+Array<T>::Array(std::initializer_list<T> arr)
 {
-  for (int i = 0; i < size; i++)
-    data[i] = *arr.begin();
+  size = arr.size();
+  data = new T[size];
+  int i = 0;
+  for (const T &val : arr)
+    data[i++] = val;
 };
 
 template <typename T> // array initializer
@@ -54,8 +60,14 @@ template <typename T> // empty initializer
 Array<T>::Array() : data(nullptr), size(0){};
 
 template <typename T>
-Array<T>::~Array()
+void Array<T>::clear()
 {
   delete[] data;
   data = nullptr;
+}
+
+template <typename T>
+Array<T>::~Array()
+{
+  clear();
 };
