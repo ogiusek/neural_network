@@ -3,5 +3,6 @@
 
 #include "./classes/include.h"
 #include "./measureTime.cpp"
+#include "./transpose.cpp"
 
 #endif
