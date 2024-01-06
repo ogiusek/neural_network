@@ -7,12 +7,12 @@ void NeuralColumn::randomize(float weightLimit, float biasLimit)
     neurons[i].randomize(weightLimit, biasLimit);
 }
 
-float *NeuralColumn::activate(float *values)
+float *NeuralColumn::activate(float *inputs)
 {
   float *sum = new float[neurons.size];
   for (int i = 0; i < neurons.size; i++)
-    sum[i] = neurons[i].activate(values);
-  delete[] values;
+    sum[i] = neurons[i].activate(inputs);
+
   return sum;
 }
 

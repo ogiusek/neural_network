@@ -51,12 +51,12 @@ float **expectedOutputs = new float *[inputsAmount] // everything what is not ab
       new float[2]{1.0, 0.0},
       new float[2]{1.0, 0.0},
       new float[2]{1.0, 0.0},
-      new float[2]{1.0, 0.0},
-      new float[2]{1.0, 0.0},
-      new float[2]{1.0, 0.0},
+      new float[2]{0.0, 1.0},
+      new float[2]{0.0, 1.0},
+      new float[2]{0.0, 1.0},
 
-      new float[2]{0.0, 1.0},
-      new float[2]{0.0, 1.0},
+      new float[2]{1.0, 0.0},
+      new float[2]{1.0, 0.0},
       new float[2]{0.0, 1.0},
       new float[2]{0.0, 1.0},
       new float[2]{0.0, 1.0},
@@ -70,10 +70,13 @@ int main()
 {
   std::cout << "Hello World\n";
 
+  // return 0;
+
   int weightLimit = 1,
       biasLimit = 1;
 
-  Array<int> columns({2, 3, 2});                                               // network structure
+  // Array<int> columns({2, 3, 2}); // network structure
+  Array<int> columns({2, 2});                                                  // network structure
   NeuralNetwork *network = new NeuralNetwork(columns);                         // create network
   network->randomize(weightLimit, biasLimit);                                  // randomize network
   vector<Slider> sliders = getNetworkSliders(network, weightLimit, biasLimit); // get network sliders
@@ -86,22 +89,26 @@ int main()
   function<void(void)> trainFunc = [&network, &window]() -> void
   {
     int maxX = window.w / 2, maxY = window.h / 2;
-    float **processedInputs = new float *[inputsAmount];
-    float **outputs = new float *[inputsAmount];
+    // float **processedInputs = new float *[inputsAmount];
+    // float **outputs = new float *[inputsAmount];
+    Array<Array<float>> processedInputs(inputsAmount);
+    Array<Array<float>> outputs(inputsAmount);
     for (int i = 0; i < inputsAmount; i++)
     {
-      processedInputs[i] = new float[2];
+      // processedInputs[i] = new float[2];
+      processedInputs[i] = Array<float>(2);
       processedInputs[i][0] = (inputs[i][0] + 0) / maxX;
       processedInputs[i][1] = (inputs[i][1] + 0) / maxY;
-      outputs[i] = new float[2];
+      // outputs[i] = new float[2];
+      outputs[i] = Array<float>(2);
       outputs[i][0] = expectedOutputs[i][0];
       outputs[i][1] = expectedOutputs[i][1];
     }
     network->train(processedInputs, outputs, 0.1, inputsAmount);
 
-    for (int i = 0; i < inputsAmount; i++) // clear memory
-      delete[] outputs[i];
-    delete[] processedInputs, outputs;
+    // for (int i = 0; i < inputsAmount; i++) // clear memory
+    //   delete[] outputs[i];
+    // delete[] processedInputs, outputs;
   };
   Button trainBtn = {500, 10, 100, 30, trainFunc};
   trainBtn.bgColor = {200, 200, 255, 255};
@@ -129,7 +136,7 @@ int main()
       for (int y = 0; y < maxY; y++)
       {
         Array<float> input({(float)x / maxX, (float)y / maxY});                               // create input
-        Array<float> output = {network->activate(input.data), 2};                             // activate network
+        Array<float> output = network->activate(input.data);                                  // activate network
         int outputColor = output[0] > output[1] ? 1 : 0;                                      // calculate output color
         SDL_Color color = {Uint8(255 * outputColor), 0, Uint8(255 * (1 - outputColor)), 255}; // set color
         SDL_SetRenderDrawColor(window.renderer, color.r, color.g, color.b, color.a);          // set color

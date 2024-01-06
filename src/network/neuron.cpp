@@ -15,15 +15,15 @@ void Neuron::randomize(float weightLimit, float biasLimit)
   bias = randomizer(biasLimit);
 };
 
-float Neuron::getActivationDerivative(float *values)
+float Neuron::getActivationDerivative(float *inputs)
 {
   float sum = bias;
   for (int i = 0; i < weights.size; i++)
-    sum += values[i] * weights[i];
+    sum += inputs[i] * weights[i];
   return sum;
 }
-float Neuron::activationFunction(float value) { return 1.0 / (1.0 + std::exp(-value)); }
-float Neuron::activate(float *values) { return activationFunction(getActivationDerivative(values)); }
+float Neuron::activationFunction(float input) { return 1.0 / (1.0 + std::exp(-input)); }
+float Neuron::activate(float *inputs) { return activationFunction(getActivationDerivative(inputs)); }
 
 Neuron::Neuron() : weights(0), bias(0){};
 Neuron::Neuron(int _inputs)

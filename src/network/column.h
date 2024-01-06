@@ -14,7 +14,7 @@ private:
 public:
   Array<Neuron> neurons;
   void randomize(float weightLimit, float biasLimit); // randomize weights and biases
-  float *activate(float *values);                     // activate column
+  float *activate(float *inputs);                     // activate column
 
   NeuralColumn(int _inputsAmount, int _neuronsAmount);
   NeuralColumn();

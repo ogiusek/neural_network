@@ -10,15 +10,15 @@
 class Neuron
 {
 private:
-  float getActivationDerivative(float *values);
-  float activationFunction(float value);
+  float getActivationDerivative(float *inputs);
+  float activationFunction(float input);
 
 public:
   Array<float> weights;
   float bias;
 
   void randomize(float weightLimit, float biasLimit);
-  float activate(float *values);
+  float activate(float *inputs);
 
   Neuron(int _inputs);
   Neuron();
