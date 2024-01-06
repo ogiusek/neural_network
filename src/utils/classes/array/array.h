@@ -1,27 +1,23 @@
 #ifndef TYPE_ARRAY
 #define TYPE_ARRAY
 
-#include <vector>
-#include <cstring>
-
 template <typename T>
 struct Array
 {
   T *data = nullptr; // array
-  int size;          // array size
+  int size = 0;      // array size
 
-  T &operator[](int index);             // returns element in array
-  Array &operator=(const Array &other); // assignment
-  T *&operator()();                     // returns array
+  T &operator[](int index); // returns element in array
 
+  Array &operator=(const Array &arr); // assignment
+  Array(const Array<T> &arr);         // copy initializer
+
+  Array();                             // default
+  explicit Array(int _size);           // allocate memory
   Array(T *arr);                       // array parse
   Array(T *arr, int _size);            // array parse
-  Array(std::vector<T> arr);           // vector parse
   Array(std::initializer_list<T> arr); // list initializer
-  Array(int _size);                    // allocate memory
-  Array();                             // default
 
-  void clear();
   ~Array();
 };
 

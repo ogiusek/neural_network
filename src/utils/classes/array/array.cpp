@@ -2,44 +2,32 @@
 
 // returns element in array
 template <typename T>
-T &Array<T>::operator[](int index)
-{
-  return data[index];
-};
-
-// returns array
-template <typename T>
-T *&Array<T>::operator()() { return data; };
+T &Array<T>::operator[](int index) { return data[index]; };
 
 // = operator
 template <typename T>
-Array<T> &Array<T>::operator=(const Array &other)
+Array<T> &Array<T>::operator=(const Array &arr)
 {
-  if (this == &other)
-    return *this;
-  delete[] data; // deallocate previous memory block
-  size = other.size;
-  data = new T[size]; // allocate new memory block
-  for (int i = 0; i < size; i++)
-    data[i] = other.data[i]; // copy elements from other to current array
+  if (this != &arr)
+  {
+    delete[] data;
+    size = arr.size;
+    data = new T[arr.size];
+    for (int i = 0; i < size; i++)
+      data[i] = arr.data[i];
+  }
   return *this;
 }
 
-template <typename T> // vector parse
-Array<T>::Array(std::vector<T> arr) : Array(arr.size())
-{
-  for (int i = 0; i < size; i++)
-    data[i] = arr[i];
-};
+template <typename T>
+Array<T>::Array(const Array<T> &arr) { operator=(arr); };
 
 template <typename T>
-Array<T>::Array(std::initializer_list<T> arr)
+Array<T>::Array(std::initializer_list<T> arr) : size(arr.size()), data(new T[arr.size()])
 {
-  size = arr.size();
-  data = new T[size];
   int i = 0;
-  for (const T &val : arr)
-    data[i++] = val;
+  for (auto it = arr.begin(); it != arr.end(); it++, i++)
+    data[i] = *it;
 };
 
 template <typename T> // array initializer
@@ -60,14 +48,4 @@ template <typename T> // empty initializer
 Array<T>::Array() : data(nullptr), size(0){};
 
 template <typename T>
-void Array<T>::clear()
-{
-  delete[] data;
-  data = nullptr;
-}
-
-template <typename T>
-Array<T>::~Array()
-{
-  clear();
-};
+Array<T>::~Array() { delete[] data; };
