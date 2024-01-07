@@ -4,5 +4,6 @@
 #include "./classes/include.h"
 #include "./measureTime.cpp"
 #include "./transpose.cpp"
+#include "./matrixMultiplication.cpp"
 
 #endif
