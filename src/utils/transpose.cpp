@@ -4,12 +4,13 @@ template <typename T>
 Array<Array<T>> transpose(Array<Array<T>> array)
 {
   Array<Array<T>> result(array[0].size);
-  for (int i = 0; i < array[0].size; i++)
-    result[i] = Array<T>(array.size);
 
-  for (int i = 0; i < array.size; i++)
-    for (int j = 0; j < array[i].size; j++)
-      result[j][i] = array[i][j];
+  for (int i = 0; i < result.size; i++)
+  {
+    result[i] = Array<T>(array.size);
+    for (int j = 0; j < result[i].size; j++)
+      result[i][j] = array[j][i];
+  }
 
   return result;
 }
