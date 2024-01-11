@@ -2,7 +2,9 @@
 #define TYPE_ARRAY
 
 #include <initializer_list>
+#include <string.h>
 
+// Not optimal for adding new elements
 template <typename T>
 struct Array
 {
@@ -21,7 +23,9 @@ struct Array
   Array operator*(const T &arr); // multiplication
   Array operator/(const T &arr); // division
 
-  void fill(T e); // fill array with one element
+  void fill(T e);      // fill array with one element
+  void insert(T e);    // add's element on start (not optimal)
+  void push_back(T e); // add's element on end (not optimal)
 
   Array &operator=(const Array &arr); // assignment
   Array(const Array<T> &arr);         // copy initializer

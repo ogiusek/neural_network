@@ -36,11 +36,7 @@ Array<T>::Array(T *arr)
 };
 
 template <typename T> // array initializer
-Array<T>::Array(T *arr, int _size) : data(new T[_size]), size(_size)
-{
-  for (int i = 0; i < _size; i++)
-    data[i] = arr[i];
-};
+Array<T>::Array(T *arr, int _size) : data(arr), size(_size){};
 
 template <typename T>
 Array<T>::Array(std::initializer_list<T> arr) : size(arr.size()), data(new T[arr.size()])
