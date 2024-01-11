@@ -38,16 +38,32 @@ Array<T> Array<T>::operator/(const Array<T> &arr)
   return temp;
 };
 
-// single element operators
+// operator+-*/=
+template <typename T>
+void Array<T>::operator+=(const T &e) { *this = (*this + Array<T>(e, size)); };
+template <typename T>
+void Array<T>::operator-=(const T &e) { *this = (*this - Array<T>(e, size)); };
+template <typename T>
+void Array<T>::operator*=(const T &e) { *this = (*this * Array<T>(e, size)); };
+template <typename T>
+void Array<T>::operator/=(const T &e) { *this = (*this / Array<T>(e, size)); };
 
+// single element operators
 template <typename T>
 Array<T> Array<T>::operator+(const T &e) { return *this + Array<T>(e, size); };
-
 template <typename T>
 Array<T> Array<T>::operator-(const T &e) { return *this - Array<T>(e, size); };
-
 template <typename T>
 Array<T> Array<T>::operator*(const T &e) { return *this * Array<T>(e, size); };
-
 template <typename T>
 Array<T> Array<T>::operator/(const T &e) { return *this / Array<T>(e, size); };
+
+// single element operator+-*/=
+template <typename T>
+void Array<T>::operator+=(const Array<T> &e) { *this = (*this + e); };
+template <typename T>
+void Array<T>::operator-=(const Array<T> &e) { *this = (*this - e); };
+template <typename T>
+void Array<T>::operator*=(const Array<T> &e) { *this = (*this * e); };
+template <typename T>
+void Array<T>::operator/=(const Array<T> &e) { *this = (*this / e); };

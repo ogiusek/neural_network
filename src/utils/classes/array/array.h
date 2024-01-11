@@ -3,6 +3,7 @@
 
 #include <initializer_list>
 #include <string.h>
+#include <type_traits>
 
 // Not optimal for adding new elements
 template <typename T>
@@ -18,10 +19,20 @@ struct Array
   Array operator*(const Array &arr); // multiplication
   Array operator/(const Array &arr); // division
 
+  void operator+=(const Array &arr); // addition
+  void operator-=(const Array &arr); // subtraction
+  void operator*=(const Array &arr); // multiplication
+  void operator/=(const Array &arr); // division
+
   Array operator+(const T &arr); // addition
   Array operator-(const T &arr); // subtraction
   Array operator*(const T &arr); // multiplication
   Array operator/(const T &arr); // division
+
+  void operator+=(const T &arr); // addition
+  void operator-=(const T &arr); // subtraction
+  void operator*=(const T &arr); // multiplication
+  void operator/=(const T &arr); // division
 
   void fill(T e);      // fill array with one element
   void insert(T e);    // add's element on start (not optimal)
