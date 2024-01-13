@@ -3,6 +3,9 @@
 template <typename T>
 Array<Array<T>> matrixMultiplication(Array<Array<T>> a, Array<Array<T>> b)
 {
+  if (a[0].size != b.size)
+    throw std::runtime_error("Invalid matrix sizes");
+
   Array<Array<T>> result(a.size);
   for (int i = 0; i < a.size; i++)
   {
@@ -14,5 +17,6 @@ Array<Array<T>> matrixMultiplication(Array<Array<T>> a, Array<Array<T>> b)
         result[i][j] += a[i][k] * b[k][j];
     }
   }
+
   return result;
 }
