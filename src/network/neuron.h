@@ -17,11 +17,15 @@ public:
   Array<float> weights;
   float bias;
 
+  &operator float();
+  &operator Array<float>();
+
   void randomize(float weightLimit, float biasLimit);
   float activate(float *inputs);
 
-  Neuron(int _inputs);
   Neuron();
+  Neuron(int _inputs);
+  Neuron(Array<float> weights, float bias);
   ~Neuron();
 };
 

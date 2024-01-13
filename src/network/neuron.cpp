@@ -1,5 +1,8 @@
 #include "neuron.h"
 
+&Neuron::operator float() { return bias; }
+&Neuron::operator Array<float>() { return weights; }
+
 void Neuron::randomize(float weightLimit, float biasLimit)
 {
   auto randomizer = [](float limit) -> float
@@ -26,8 +29,7 @@ float Neuron::activationFunction(float input) { return 1.0 / (1.0 + std::exp(-in
 float Neuron::activate(float *inputs) { return activationFunction(getActivationDerivative(inputs)); }
 
 Neuron::Neuron() : weights(0), bias(0){};
-Neuron::Neuron(int _inputs)
-    : weights(_inputs),
-      bias(0.0){};
+Neuron::Neuron(int _inputs) : weights(_inputs), bias(0.0){};
+Neuron::Neuron(Array<float> weights, float bias) : weights(weights), bias(bias){};
 
 Neuron::~Neuron(){};
