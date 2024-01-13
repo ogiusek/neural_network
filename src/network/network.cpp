@@ -9,9 +9,9 @@ void NeuralNetwork::randomize(float weightLimit, float biasLimit)
 Array<Array<float>> NeuralNetwork::activateFull(float *inputs)
 {
   Array<Array<float>> output(columns.size);
-  output[0] = columns[0].activate(inputs);
+  output[0] = Array<float>(columns[0].activate(inputs), columns[0].neurons.size);
   for (int i = 1; i < columns.size; i++)
-    output[i] = columns[i].activate(output[i - 1].data);
+    output[i] = Array<float>(columns[i].activate(output[i - 1].data), columns[i].neurons.size);
   return output;
 }
 
@@ -21,30 +21,37 @@ Array<float> NeuralNetwork::activate(float *inputs)
   return output[output.size - 1];
 }
 
-// void NeuralNetwork::train(float **inputs, float **expectedOutputs, float learningRate, int batchSize)
-void NeuralNetwork::train(Array<Array<float>> inputs, Array<Array<float>> expectedOutputs, float learningRate, int batchSize)
+void NeuralNetwork::train(Array<Array<float>> inputs, Array<Array<float>> expectedOutputs, int epochs)
 {
-  for (int batch = 0; batch < batchSize; batch++)
-    for (int x = 0; x < columns.size; x++)
-      for (int y = 0; y < columns[x].neurons.size; y++)
+  float learningRate = 0.01f;
+  for (int epoch = 0; epoch < epochs; epoch++)
+  {
+    for (int batch = 0; batch < inputs.size; batch++)
+    {
+      Array<Array<float>> outputs = activateFull(inputs[batch].data);
+      outputs.insert(inputs[batch]);
+      Array<Neuron> &column = columns[columns.size - 1].neurons;
+
+      Array<float> delta_o = outputs[outputs.size - 1] - expectedOutputs[batch];
+      delta_o *= -learningRate;
+
+      Array<Array<float>> weights_diff(delta_o.size);
+
+      for (int i = 0; i < delta_o.size; i++)
       {
-        Neuron *neuron = &columns[x].neurons[y];
-
-        // Array<float *> outputs = activateFull(inputs[batch]);
-        // Array<float *> outputs = activateFull(inputs[batch].data);
-        // Array<float >> outputs = activateFull(inputs[batch].data);
-        // Array<float> outputError = outputs[outputs.size];
-
-        // for (int i = 0; i < outputs.size - 1; i++)
-        // delete[] outputs[i];
-
-        // for (int i = 0; i < outputError.size; i++)
-        //   outputError[i] = outputs[outputs.size - 1][i] - expectedOutputs[batch][i];
-
-        neuron->randomize(1.0, 1.0);
-        // for (int i = 0; i < outputs.size - 1; i++)
-        //   delete[] outputs[i];
+        weights_diff[i] = Array<float>(outputs[outputs.size - 2].size);
+        for (int j = 0; j < outputs[outputs.size - 2].size; j++)
+          weights_diff[i][j] = delta_o[i] * outputs[outputs.size - 2][j];
       }
+
+      Array<float> bias_diff = delta_o;
+      for (int i = 0; i < weights_diff.size; i++)
+      {
+        columns[columns.size - 1].neurons[i].weights += weights_diff[i];
+        columns[columns.size - 1].neurons[i].bias += bias_diff[i];
+      }
+    }
+  }
 }
 
 NeuralNetwork::NeuralNetwork(Array<int> _columns)

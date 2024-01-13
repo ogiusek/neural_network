@@ -3,74 +3,70 @@
 using namespace std;
 
 int inputsAmount = 25;
-float **inputs = new float *[inputsAmount]
-{
-  new float[2]{0.0, 0.0},
-      new float[2]{50.0, 0.0},
-      new float[2]{0.0, 50.0},
-      new float[2]{50.0, 50.0},
+Array<Array<float>> inputs = {
+    {0.0, 0.0},
+    {50.0, 0.0},
+    {0.0, 50.0},
+    {50.0, 50.0},
 
-      new float[2]{100.0, 0.0},
-      new float[2]{0.0, 100.0},
-      new float[2]{100.0, 50.0},
-      new float[2]{50.0, 100.0},
-      new float[2]{100.0, 100.0},
+    {100.0, 0.0},
+    {0.0, 100.0},
+    {100.0, 50.0},
+    {50.0, 100.0},
+    {100.0, 100.0},
 
-      new float[2]{150.0, 0.0},
-      new float[2]{0.0, 150.0},
-      new float[2]{150.0, 50.0},
-      new float[2]{50.0, 150.0},
-      new float[2]{150.0, 100.0},
-      new float[2]{100.0, 150.0},
-      new float[2]{150.0, 150.0},
+    {150.0, 0.0},
+    {0.0, 150.0},
+    {150.0, 50.0},
+    {50.0, 150.0},
+    {150.0, 100.0},
+    {100.0, 150.0},
+    {150.0, 150.0},
 
-      new float[2]{200.0, 0.0},
-      new float[2]{0.0, 200.0},
-      new float[2]{200.0, 50.0},
-      new float[2]{50.0, 200.0},
-      new float[2]{200.0, 100.0},
-      new float[2]{100.0, 200.0},
-      new float[2]{200.0, 150.0},
-      new float[2]{150.0, 200.0},
-      new float[2]{200.0, 200.0},
+    {200.0, 0.0},
+    {0.0, 200.0},
+    {200.0, 50.0},
+    {50.0, 200.0},
+    {200.0, 100.0},
+    {100.0, 200.0},
+    {200.0, 150.0},
+    {150.0, 200.0},
+    {200.0, 200.0},
 };
-float **expectedOutputs = new float *[inputsAmount] // everything what is not above 150 should be 1.0, 0.0 else 0.0, 1.0
-{
-  new float[2]{1.0, 0.0},
-      new float[2]{1.0, 0.0},
-      new float[2]{1.0, 0.0},
-      new float[2]{1.0, 0.0},
+Array<Array<float>> expectedOutputs = {
+    {1.0, 0.0},
+    {1.0, 0.0},
+    {1.0, 0.0},
+    {1.0, 0.0},
 
-      new float[2]{1.0, 0.0},
-      new float[2]{1.0, 0.0},
-      new float[2]{1.0, 0.0},
-      new float[2]{1.0, 0.0},
-      new float[2]{1.0, 0.0},
+    {1.0, 0.0},
+    {1.0, 0.0},
+    {1.0, 0.0},
+    {1.0, 0.0},
+    {1.0, 0.0},
 
-      new float[2]{1.0, 0.0},
-      new float[2]{1.0, 0.0},
-      new float[2]{1.0, 0.0},
-      new float[2]{1.0, 0.0},
-      new float[2]{0.0, 1.0},
-      new float[2]{0.0, 1.0},
-      new float[2]{0.0, 1.0},
+    {1.0, 0.0},
+    {1.0, 0.0},
+    {1.0, 0.0},
+    {1.0, 0.0},
+    {0.0, 1.0},
+    {0.0, 1.0},
+    {0.0, 1.0},
 
-      new float[2]{1.0, 0.0},
-      new float[2]{1.0, 0.0},
-      new float[2]{0.0, 1.0},
-      new float[2]{0.0, 1.0},
-      new float[2]{0.0, 1.0},
-      new float[2]{0.0, 1.0},
-      new float[2]{0.0, 1.0},
-      new float[2]{0.0, 1.0},
-      new float[2]{0.0, 1.0},
+    {1.0, 0.0},
+    {1.0, 0.0},
+    {0.0, 1.0},
+    {0.0, 1.0},
+    {0.0, 1.0},
+    {0.0, 1.0},
+    {0.0, 1.0},
+    {0.0, 1.0},
+    {0.0, 1.0},
 };
 
 int main()
 {
   std::cout << "Hello World\n";
-
-  // return 0;
 
   int weightLimit = 1,
       biasLimit = 1;
@@ -89,30 +85,25 @@ int main()
   function<void(void)> trainFunc = [&network, &window]() -> void
   {
     int maxX = window.w / 2, maxY = window.h / 2;
-    // float **processedInputs = new float *[inputsAmount];
-    // float **outputs = new float *[inputsAmount];
     Array<Array<float>> processedInputs(inputsAmount);
-    Array<Array<float>> outputs(inputsAmount);
     for (int i = 0; i < inputsAmount; i++)
     {
-      // processedInputs[i] = new float[2];
       processedInputs[i] = Array<float>(2);
       processedInputs[i][0] = (inputs[i][0] + 0) / maxX;
       processedInputs[i][1] = (inputs[i][1] + 0) / maxY;
-      // outputs[i] = new float[2];
-      outputs[i] = Array<float>(2);
-      outputs[i][0] = expectedOutputs[i][0];
-      outputs[i][1] = expectedOutputs[i][1];
     }
-    network->train(processedInputs, outputs, 0.1, inputsAmount);
-
-    // for (int i = 0; i < inputsAmount; i++) // clear memory
-    //   delete[] outputs[i];
-    // delete[] processedInputs, outputs;
+    network->train(processedInputs, expectedOutputs, 10);
   };
   Button trainBtn = {500, 10, 100, 30, trainFunc};
   trainBtn.bgColor = {200, 200, 255, 255};
   trainBtn.text = TEXT("Train");
+
+  int nan = measureTime([&trainFunc]() -> void
+                        {
+    for (int i = 0; i < 500; i++){
+      trainFunc();
+    } });
+  cout << nan << endl;
 
   while (running) // main loop (made each frame)
   {
