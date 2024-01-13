@@ -1,16 +1,17 @@
 #ifndef TYPE_ARRAY
 #define TYPE_ARRAY
 
-#include <initializer_list>
-#include <string.h>
-#include <type_traits>
+#include <initializer_list> // initializer_list
+#include <string.h>         // memmove
+#include <functional>       // std::function
 
 // Not optimal for adding new elements
 template <typename T>
 struct Array
 {
   T *data = nullptr; // array
-  int size = 0;      // array size
+  bool clear = true;
+  int size = 0; // array size
 
   T &operator[](int index); // returns element in array
 

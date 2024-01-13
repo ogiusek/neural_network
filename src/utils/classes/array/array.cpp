@@ -16,10 +16,8 @@ void Array<T>::fill(T e)
 template <typename T>
 void Array<T>::insert(T e)
 {
-  T *newData = (T *)realloc(data, (++size) * sizeof(T));
-  if (!newData)
-    throw new std::runtime_error("Error realocating memory");
-  memmove(newData + 1, newData, (size - 1) * sizeof(T));
+  T *newData = new T[++size];
+  memmove(newData + 1, data, (size - 1) * sizeof(T));
   newData[0] = e;
   data = newData;
 }
@@ -27,13 +25,16 @@ void Array<T>::insert(T e)
 template <typename T>
 void Array<T>::push_back(T e)
 {
-  T *newData = (T *)realloc(data, (++size) * sizeof(T));
-  if (!newData)
-    throw new std::runtime_error("error realocating memory");
+  T *newData = new T[++size];
+  memmove(newData, data, (size - 1) * sizeof(T));
   newData[size - 1] = e;
   data = newData;
 }
 
 template <typename T>
-Array<T>::~Array() { delete[] data; };
+Array<T>::~Array()
+{
+  if (clear)
+    delete[] data;
+};
 // i love creating structures which probably exist
