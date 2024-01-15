@@ -16,6 +16,12 @@ public:
   void randomize(float weightLimit, float biasLimit); // randomize weights and biases
   float *activate(float *inputs);                     // activate column
 
+  void applyDelta(Array<float> delta, Array<float> outputs, float learningRate);
+  operator Array<float>();             // get biases
+  operator Array<Array<float>>();      // get weights
+  void operator=(Array<float>);        // set biases
+  void operator=(Array<Array<float>>); // set weights
+
   NeuralColumn(int _inputsAmount, int _neuronsAmount);
   NeuralColumn();
   ~NeuralColumn();

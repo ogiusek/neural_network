@@ -23,35 +23,32 @@ Array<float> NeuralNetwork::activate(float *inputs)
 
 void NeuralNetwork::train(Array<Array<float>> inputs, Array<Array<float>> expectedOutputs, int epochs)
 {
-  float learningRate = 0.01f;
   for (int epoch = 0; epoch < epochs; epoch++)
-  {
     for (int batch = 0; batch < inputs.size; batch++)
     {
+      // if (rand() % 10 == 0) // randomly skip a batch
+      //   continue;
+
+      // learning
+      // changes over epochs
+      float learningRate = 1.0 / (1.0 + epoch);
+      // float learningRate = 0.1;
       Array<Array<float>> outputs = activateFull(inputs[batch].data);
       outputs.insert(inputs[batch]);
-      Array<Neuron> &column = columns[columns.size - 1].neurons;
 
-      Array<float> delta_o = outputs[outputs.size - 1] - expectedOutputs[batch];
-      delta_o *= -learningRate;
-
-      Array<Array<float>> weights_diff(delta_o.size);
-
-      for (int i = 0; i < delta_o.size; i++)
+      Array<float> delta = outputs[outputs.size - 1] - expectedOutputs[batch];
+      for (int layer = columns.size - 1; layer >= 0; layer--)
       {
-        weights_diff[i] = Array<float>(outputs[outputs.size - 2].size);
-        for (int j = 0; j < outputs[outputs.size - 2].size; j++)
-          weights_diff[i][j] = delta_o[i] * outputs[outputs.size - 2][j];
-      }
+        columns[layer].applyDelta(delta, outputs[layer], learningRate);
+        if (layer == 0)
+          continue;
 
-      Array<float> bias_diff = delta_o;
-      for (int i = 0; i < weights_diff.size; i++)
-      {
-        columns[columns.size - 1].neurons[i].weights += weights_diff[i];
-        columns[columns.size - 1].neurons[i].bias += bias_diff[i];
+        Array<Array<float>> weights_transposed = transpose((Array<Array<float>>)columns[layer]);
+        Array<Array<float>> l_delta = matrixMultiplication(weights_transposed, transpose(Array<Array<float>>({delta})));
+        l_delta *= (outputs[layer] * (Array<float>(1, outputs[layer].size) - outputs[layer]));
+        delta = transpose(l_delta)[0];
       }
     }
-  }
 }
 
 NeuralNetwork::NeuralNetwork(Array<int> _columns)

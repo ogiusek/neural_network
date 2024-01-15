@@ -49,12 +49,16 @@ Array<Array<float>> expectedOutputs = {
     {1.0, 0.0},
     {1.0, 0.0},
     {1.0, 0.0},
-    {0.0, 1.0},
-    {0.0, 1.0},
+    // {0.0, 1.0},
+    {1.0, 0.0},
+    // {0.0, 1.0},
+    {1.0, 0.0},
     {0.0, 1.0},
 
     {1.0, 0.0},
+    // {0.0, 1.0},
     {1.0, 0.0},
+    // {0.0, 1.0},
     {0.0, 1.0},
     {0.0, 1.0},
     {0.0, 1.0},
@@ -71,10 +75,11 @@ int main()
   int weightLimit = 1,
       biasLimit = 1;
 
-  // Array<int> columns({2, 3, 2}); // network structure
-  Array<int> columns({2, 2});                                                  // network structure
-  NeuralNetwork *network = new NeuralNetwork(columns);                         // create network
-  network->randomize(weightLimit, biasLimit);                                  // randomize network
+  Array<int> columns({2, 3, 2}); // network structure
+  // Array<int> columns({2, 2});                          // network structure
+  NeuralNetwork *network = new NeuralNetwork(columns); // create network
+  network->randomize(0, 0);                            // randomize network
+  // network->randomize(weightLimit, biasLimit);                                  // randomize network
   vector<Slider> sliders = getNetworkSliders(network, weightLimit, biasLimit); // get network sliders
 
   Window window(1280, 720, "title"); // create window
@@ -92,7 +97,7 @@ int main()
       processedInputs[i][0] = (inputs[i][0] + 0) / maxX;
       processedInputs[i][1] = (inputs[i][1] + 0) / maxY;
     }
-    network->train(processedInputs, expectedOutputs, 10);
+    network->train(processedInputs, expectedOutputs, 100);
   };
   Button trainBtn = {500, 10, 100, 30, trainFunc};
   trainBtn.bgColor = {200, 200, 255, 255};
@@ -100,7 +105,7 @@ int main()
 
   int nan = measureTime([&trainFunc]() -> void
                         {
-    for (int i = 0; i < 500; i++){
+    for (int i = 0; i < 100; i++){
       trainFunc();
     } });
   cout << nan << endl;
