@@ -6,4 +6,6 @@
 #include "./transpose.cpp"
 #include "./matrixMultiplication.cpp"
 
+#include "./readFile.cpp"
+
 #endif
