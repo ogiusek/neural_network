@@ -1,11 +1,14 @@
 #include <functional>
 #include <chrono>
 
-// returns time in nanoseconds
-int measureTime(std::function<void()> func)
+namespace Utils
 {
-  auto start = std::chrono::high_resolution_clock::now();
-  func();
-  auto end = std::chrono::high_resolution_clock::now();
-  return std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
-}
+  // returns time in nanoseconds
+  int measureTime(std::function<void()> func)
+  {
+    auto start = std::chrono::high_resolution_clock::now();
+    func();
+    auto end = std::chrono::high_resolution_clock::now();
+    return std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+  }
+};

@@ -42,6 +42,9 @@ struct Array
   Array &operator=(const Array &arr); // assignment
   Array(const Array<T> &arr);         // copy initializer
 
+  template <typename NT>
+  operator Array<NT>();
+
   explicit Array(int _size);           // allocate memory
   explicit Array(T e, int _size);      // allocate and fill
   explicit Array(T *arr);              // array parse

@@ -7,6 +7,16 @@ template <typename T>
 T &Array<T>::operator[](int index) { return data[index]; };
 
 template <typename T>
+template <typename NT>
+Array<T>::operator Array<NT>()
+{
+  Array<NT> result(size);
+  for (int i = 0; i < size; i++)
+    result[i] = data[i];
+  return result;
+};
+
+template <typename T>
 void Array<T>::fill(T e)
 {
   for (int i = 0; i < size; i++)

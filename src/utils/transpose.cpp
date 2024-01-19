@@ -1,16 +1,19 @@
 #include "./include.h"
 
-template <typename T>
-Array<Array<T>> transpose(Array<Array<T>> array)
+namespace Utils
 {
-  Array<Array<T>> result(array[0].size);
-
-  for (int i = 0; i < result.size; i++)
+  template <typename T>
+  Array<Array<T>> transpose(Array<Array<T>> array)
   {
-    result[i] = Array<T>(array.size);
-    for (int j = 0; j < result[i].size; j++)
-      result[i][j] = array[j][i];
-  }
+    Array<Array<T>> result(array[0].size);
 
-  return result;
-}
+    for (int i = 0; i < result.size; i++)
+    {
+      result[i] = Array<T>(array.size);
+      for (int j = 0; j < result[i].size; j++)
+        result[i][j] = array[j][i];
+    }
+
+    return result;
+  }
+};
